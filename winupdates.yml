@@ -1,6 +1,6 @@
 ---
-- hosts: all
 - name: Install all critical and security updates
+  hosts: all
   tasks:
     - name: Running Windows Update
       win_updates:
