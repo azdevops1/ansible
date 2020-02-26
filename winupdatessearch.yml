@@ -1,0 +1,11 @@
+---
+- name: Search all critical and security updates
+  hosts: all
+  tasks:
+    - name: Search Windows Update
+      win_updates:
+        category_names:
+         - CriticalUpdates
+         - SecurityUpdates
+        state: searched
+        log_path: C:\ansible_wu.txt
