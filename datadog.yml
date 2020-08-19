@@ -1,0 +1,5 @@
+- hosts: servers
+  roles:
+    - { role: datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "50d06f1ecb72d022a91a0bb5ae4e5ce7"
