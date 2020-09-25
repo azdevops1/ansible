@@ -18,7 +18,7 @@
     directoryOwner:   'lnxcfg' #put in what ever users you need
     directoryGroup:   'lnxcfg' #put in what ever group you need
     directoryMode:    '0755'        
-    mountOptions:     'defaults'  tasks:
+    mountOptions:     "'defaults'  tasks:"
         - name: Create Partion
           # Using gpt partition type.  Creating LVM based partition.
           parted:
