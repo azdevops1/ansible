@@ -3,6 +3,8 @@
   hosts: all
   tasks:
     - name: Search Windows Update
+      debug:
+      var: morpheus['results']['instalMsi']
       win_updates:
         category_names:
          - CriticalUpdates
