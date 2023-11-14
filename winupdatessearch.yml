@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - debug:
-        msg: "Result is "{{ morpheus['results']['installMsi'] }}"
+        msg: "Result is {{ morpheus['results']['installMsi'] }}"
     - name: Search Windows Update
       win_updates:
         category_names:
