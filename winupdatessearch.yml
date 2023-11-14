@@ -9,3 +9,5 @@
          - SecurityUpdates
         state: searched
         log_path: C:\ansible_wu.txt
+      when: morpheus['results']['installMsi'] == "True"
+
