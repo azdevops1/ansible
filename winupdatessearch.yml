@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - debug:
-        msg: "Result is {{ morpheus['results']['installMsi'] }}"
+        msg: "Result is {{morpheus['results']['installMsi']}}"
     - name: Setting fact to morpheus result from previous task
       set_fact:
         morpheusresult: "{{ morpheus['results']['installMsi'] }}"
