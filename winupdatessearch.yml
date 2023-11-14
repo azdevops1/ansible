@@ -6,9 +6,10 @@
         msg: "Result is {{morpheus['results']['installMsi']}}"
     - name: Setting fact to morpheus result from previous task
       set_fact:
-        morpheusresult: "{{ morpheus['results']['installMsi'] }}" | replace('_suffix', '')
+        morpheusresult: "{{ morpheus['results']['installMsi'] }}"
+        resultstrip: morpheusresult | replace('_suffix', '')
     - debug:
-        var: morpheusresult
+        var: resultstrip
     - name: Search Windows Update
       win_updates:
         category_names:
@@ -16,5 +17,5 @@
          - SecurityUpdates
         state: searched
         log_path: C:\ansible_wu.txt
-      when: morpheusresult == "Else"
+      when: resultstrip == "Else"
 
