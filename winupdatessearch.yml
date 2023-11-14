@@ -10,4 +10,8 @@
         state: searched
         log_path: C:\ansible_wu.txt
       when: "{{ morpheus['results']['installMsi'] }}" == "Else"
+    - name: Getting value
+      set_fact:
+        resultvalue: "{{ morpheus['results']['installMsi'] }}"
+    - debug: var=resultvalue
 
