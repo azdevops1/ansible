@@ -20,11 +20,11 @@
         name: Web-Server
         state: present
         include_management_tools: yes
-      when: resultstrip == "Install IIS"
+      when: resultstrip == "Installing IIS"
         
     - name: Ensure IIS service is running and set to start automatically
       win_service:
         name: W3SVC
         state: started
         start_mode: auto
-      when: resultstrip == "Install IIS"
+      when: resultstrip == "Installing IIS"
