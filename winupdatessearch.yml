@@ -3,13 +3,11 @@
   hosts: all
   tasks:
     - name: Search Windows Update
-      debug:
-      var: morpheus['results']['instalMsi']
       win_updates:
         category_names:
          - CriticalUpdates
          - SecurityUpdates
         state: searched
         log_path: C:\ansible_wu.txt
-      when: morpheus['results']['installMsi'] == "True"
+      when: "{{ morpheus['results']['installMsi'] }}" == "True"
 
