@@ -1,13 +1,15 @@
+---
 - name: Install and Configure Internet Information Services (IIS) on Windows Server
-hosts: all
-become: yes
-tasks:
-- name: Install IIS
-  win_feature:
-  name: Web-Server
-  state: present
-- name: Ensure IIS service is running and set to start automatically
-  win_service:
-  name: W3SVC
-  state: started
-  start_mode: auto
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install IIS
+      win_feature:
+        name: Web-Server
+        state: present
+        include_management_tools: yes
+    - name: Ensure IIS service is running and set to start automatically
+      win_service:
+        name: W3SVC
+        state: started
+        start_mode: auto
