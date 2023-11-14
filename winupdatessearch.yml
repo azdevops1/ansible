@@ -8,7 +8,7 @@
         msg: "Result is {{morpheus['results']['installMsi']}}"
     - name: Setting fact to morpheus result from previous task
       set_fact:
-        resultstrip: "{{ morpheusresult | replace(' ', '') }}"
+        resultstrip: "{{ morpheusresult | replace('\n', '') }}"
     - debug:
         var: resultstrip
     - name: Search Windows Update
