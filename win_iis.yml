@@ -1,15 +1,30 @@
 ---
 - name: Install and Configure Internet Information Services (IIS) on Windows Server
   hosts: all
+  vars:
+    morpheusresult: "{{ morpheus['results']['installMsi'] }}"
   become: yes
   tasks:
+    - debug:
+        msg: "Result is {{morpheus['results']['installMsi']}}"
+
+    - name: Setting fact to morpheus result from previous task
+      set_fact:
+        resultstrip: "{{ morpheusresult | replace('\n', '') }}"
+        
+    - debug:
+        var: resultstrip
+        
     - name: Install IIS
       win_feature:
         name: Web-Server
         state: present
         include_management_tools: yes
+      when: resultstrip == "Install IIS"
+        
     - name: Ensure IIS service is running and set to start automatically
       win_service:
         name: W3SVC
         state: started
         start_mode: auto
+      when: resultstrip == "Install IIS"
