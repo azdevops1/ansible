@@ -1,13 +1,14 @@
 ---
 - name: Search all critical and security updates
   hosts: all
+  vars:
+    morpheusresult: "{{ morpheus['results']['installMsi'] }}"
   tasks:
     - debug:
         msg: "Result is {{morpheus['results']['installMsi']}}"
     - name: Setting fact to morpheus result from previous task
       set_fact:
-        morpheusresult: "{{ morpheus['results']['installMsi'] }}"
-          resultstrip: "{{ morpheusresult | replace(' ', '') }}"
+        resultstrip: "{{ morpheusresult | replace(' ', '') }}"
     - debug:
         var: resultstrip
     - name: Search Windows Update
