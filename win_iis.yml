@@ -3,7 +3,7 @@
   hosts: all
   vars:
     morpheusresult: "{{ morpheus['results']['installMsi'] }}"
-  become: yes
+  
   tasks:
     - debug:
         msg: "Result is {{morpheus['results']['installMsi']}}"
