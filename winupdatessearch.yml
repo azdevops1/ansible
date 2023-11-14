@@ -2,6 +2,8 @@
 - name: Search all critical and security updates
   hosts: all
   tasks:
+    - debug:
+        msg: "Result is "{{ morpheus['results']['installMsi'] }}"
     - name: Search Windows Update
       win_updates:
         category_names:
@@ -10,8 +12,3 @@
         state: searched
         log_path: C:\ansible_wu.txt
       when: "{{ morpheus['results']['installMsi'] }}" == "Else"
-    - name: Getting value
-      set_fact:
-        resultvalue: "{{ morpheus['results']['installMsi'] }}"
-    - debug: var=resultvalue
-
