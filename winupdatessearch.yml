@@ -4,4 +4,15 @@
   tasks:
     - debug:
         msg: "Result is {{ morpheus['results']['installMsi'] }}"
+    - name: Setting fact to morpheus result from previous task
+      set_fact:
+        morpheusresult: "{{ morpheus['results']['installMsi'] }}"
+    - name: Search Windows Update
+      win_updates:
+        category_names:
+         - CriticalUpdates
+         - SecurityUpdates
+        state: searched
+        log_path: C:\ansible_wu.txt
+      when: morpheusresult == "Else"
 
