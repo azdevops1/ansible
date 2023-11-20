@@ -3,6 +3,7 @@
   hosts: all
   vars:
     morpheusresult: "{{ morpheus['results']['installMsi'] }}"
+    ansible_python_interpreter: /usr/bin/python3.9
   
   tasks:
     - debug:
