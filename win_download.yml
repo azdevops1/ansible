@@ -1,0 +1,18 @@
+---
+- name: Download files to a custom directory on Windows
+  hosts: all
+  tasks:
+    - name: Ensure target directory exists
+      win_file:
+        path: C:\downloads
+        state: directory
+
+    - name: Download sample file 1
+      win_get_url:
+        url: https://www.learningcontainer.com/wp-content/uploads/2020/04/sample-text-file.txt
+        dest: C:\downloads\sample1.txt
+
+    - name: Download sample file 2
+      win_get_url:
+        url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+        dest: C:\downloads\dummy.pdf
