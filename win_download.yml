@@ -1,18 +1,31 @@
 ---
 - name: Download files to a custom directory on Windows
-  hosts: all
-  tasks:
-    - name: Ensure target directory exists
-      win_file:
-        path: C:\downloads
-        state: directory
+hosts: all
+vars:
+	morpheusresult: "{{ morpheus['results']['customDir'] }}"
+tasks:
+	- name: Debug morpheus result
+	debug:
+		msg: "Result is {{ morpheus['results']['customDir'] }}"
 
-    - name: Download sample file 1
-      win_get_url:
-        url: https://www.learningcontainer.com/wp-content/uploads/2020/04/sample-text-file.txt
-        dest: C:\downloads\sample1.txt
+	- name: Setting fact to morpheus result from previous task
+	set_fact:
+		resultstrip: "{{ morpheusresult | replace('\n', '') }}"
 
-    - name: Download sample file 2
-      win_get_url:
-        url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
-        dest: C:\downloads\dummy.pdf
+	- debug:
+		var: resultstrip
+
+	- name: Ensure target directory exists
+	win_file:
+		path: "C:\\{{ resultstrip }}"
+		state: directory
+
+	- name: Download sample file 1
+	win_get_url:
+		url: https://www.learningcontainer.com/wp-content/uploads/2020/04/sample-text-file.txt
+		dest: "C:\\{{ resultstrip }}\\sample1.txt"
+
+	- name: Download sample file 2
+	win_get_url:
+		url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+		dest: "C:\\{{ resultstrip }}\\dummy.pdf"
