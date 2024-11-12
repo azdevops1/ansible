@@ -1,0 +1,20 @@
+---
+- name: Update system packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update packages (RedHat based)
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    - name: Update packages (Debian based)
+      apt:
+        upgrade: yes
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Output OS family for debugging
+      debug:
+        msg: "Detected OS Family: {{ ansible_os_family }}"
