@@ -1,0 +1,31 @@
+---
+- hosts: all
+  tasks:
+    - name: Get disk facts
+      win_disk_facts:
+
+    - name: Show all disk details
+      debug:
+        msg: 
+          - "Disk {{ item.index + 1 }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
+          - "System Disk: {{ item.system_disk | default('No') }}"
+      loop: "{{ ansible_facts.disks }}"
+      loop_control:
+        index_var: index
+
+    - name: Convert all disks into various formats
+      debug:
+        msg: 
+          - "Disk {{ disk.index + 1 }}:"
+          - "  Size in GiB: {{ disk.disksize_gib }}"
+          - "  Human-readable Size: {{ disk.disksize_gib_human }}"
+          - "  System Disk: {{ disk.system_disk | default('No') }}"
+      loop: "{{ ansible_facts.disks }}"
+      loop_control:
+        index_var: index
+      vars:
+        disk:
+          index: "{{ index }}"
+          disksize_gib_human: "{{ item.size | filesizeformat(true) }}"
+          disksize_gib: "{{ (item.size/1024|pow(3))|round|int }}"
+          system_disk: "{{ item.system_disk | default('No') }}"
