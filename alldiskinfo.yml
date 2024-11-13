@@ -7,15 +7,11 @@
     - name: List all disks
       debug:
         msg: 
-          - "Disk {{ item.index + 1 }}:"
-          - "  Device ID: {{ item.disk.device_id }}"
-          - "  Size: {{ item.disk.size | filesizeformat(true) }}"
-          - "  System Disk: {{ 'Yes' if item.disk.system_disk else 'No' }}"
-          - "  Model: {{ item.disk.model }}"
-          - "  Serial Number: {{ item.disk.serial_number }}"
+          - "Disk {{ (item.1 | int) + 1 }}:"
+          - "  Device ID: {{ item.0.device_id }}"
+          - "  Size: {{ item.0.size | filesizeformat(true) }}"
+          - "  System Disk: {{ 'Yes' if item.0.system_disk else 'No' }}"
+          - "  Model: {{ item.0.model }}"
+          - "  Serial Number: {{ item.0.serial_number }}"
       loop: "{{ ansible_facts.disks | zip_longest(range(ansible_facts.disks | length)) | list }}"
-      vars:
-        ansible_loop_vars:
-          index: "{{ item.1 }}"
-          disk: "{{ item.0 }}"
       when: ansible_facts.disks is defined
