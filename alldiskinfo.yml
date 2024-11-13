@@ -1,25 +1,18 @@
 ---
 - hosts: all
+  gather_facts: no
   tasks:
     - name: Get disk facts
       win_disk_facts:
 
-    - name: Show all disk details
+    - name: List all disks
       debug:
         msg: 
-          - "Disk {{ ansible_loop.index }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
-          - "System Disk: {{ item.system_disk | default('No') }}"
+          - "Disk {{ loop.index }}:"
+          - "  Device ID: {{ item.device_id }}"
+          - "  Size: {{ item.size | filesizeformat(true) }}"
+          - "  System Disk: {{ 'Yes' if item.system_disk else 'No' }}"
+          - "  Model: {{ item.model }}"
+          - "  Serial Number: {{ item.serial_number }}"
       loop: "{{ ansible_facts.disks }}"
-      loop_control:
-        loop_var: item
-
-    - name: Convert all disks into various formats
-      debug:
-        msg: 
-          - "Disk {{ ansible_loop.index }}:"
-          - "  Size in GiB: {{ (item.size/1024|pow(3))|round|int }}"
-          - "  Human-readable Size: {{ item.size | filesizeformat(true) }}"
-          - "  System Disk: {{ item.system_disk | default('No') }}"
-      loop: "{{ ansible_facts.disks }}"
-      loop_control:
-        loop_var: item
+      when: ansible_facts.disks is defined
