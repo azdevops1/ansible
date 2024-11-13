@@ -7,25 +7,19 @@
     - name: Show all disk details
       debug:
         msg: 
-          - "Disk {{ item.disk_number }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
+          - "Disk {{ ansible_loop.index }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
           - "System Disk: {{ item.system_disk | default('No') }}"
       loop: "{{ ansible_facts.disks }}"
       loop_control:
-        loop_var: outer_item
-      vars:
-        disk_number: "{{ ansible_loop.index0 + 1 if ansible_loop is defined else 1 }}"
-      when: ansible_facts.disks is defined
+        loop_var: item
 
     - name: Convert all disks into various formats
       debug:
         msg: 
-          - "Disk {{ item.disk_number }}:"
+          - "Disk {{ ansible_loop.index }}:"
           - "  Size in GiB: {{ (item.size/1024|pow(3))|round|int }}"
           - "  Human-readable Size: {{ item.size | filesizeformat(true) }}"
           - "  System Disk: {{ item.system_disk | default('No') }}"
       loop: "{{ ansible_facts.disks }}"
       loop_control:
-        loop_var: outer_item
-      vars:
-        disk_number: "{{ ansible_loop.index0 + 1 if ansible_loop is defined else 1 }}"
-      when: ansible_facts.disks is defined
+        loop_var: item
