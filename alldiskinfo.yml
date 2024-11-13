@@ -1,12 +1,10 @@
 ---
-- name: List disks on Windows machine with size in GB
+- name: List disks on Windows machine
   hosts: all
   gather_facts: yes
   tasks:
-    - name: Get disk information and convert size to GB
-      win_command: |
-        powershell Get-WmiObject -Class Win32_DiskDrive | 
-        Select-Object DeviceID, Model, @{Name="SizeGB";Expression={[math]::round($_.Size / 1073741824, 2)}}, MediaType
+    - name: Get disk information
+      win_command: "powershell Get-WmiObject -Class Win32_DiskDrive | Select-Object DeviceID, Model, Size, MediaType"
       register: disk_info
 
     - name: Display disk information
