@@ -1,7 +1,7 @@
 ---
 - name: List disks on Windows machine with size in GB
-  hosts: windows
-  gather_facts: no
+  hosts: all
+  gather_facts: yes
   tasks:
     - name: Get disk information and convert size to GB
       win_command: |
