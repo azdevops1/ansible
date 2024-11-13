@@ -7,16 +7,16 @@
     - name: Show all disk details
       debug:
         msg: 
-          - "Disk {{ loop.index }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
+          - "Disk {{ ansible_loop.index }} - Size: {{ item.size | filesizeformat(true) }} ({{ (item.size/1024|pow(3))|round|int }} GiB)"
           - "System Disk: {{ item.system_disk | default('No') }}"
       loop: "{{ ansible_facts.disks }}"
       loop_control:
-        index_var: loop_index
+        index_var: ansible_loop_index
 
     - name: Convert all disks into various formats
       debug:
         msg: 
-          - "Disk {{ loop.index }}:"
+          - "Disk {{ ansible_loop.index }}:"
           - "  Size in GiB: {{ (item.size/1024|pow(3))|round|int }}"
           - "  Human-readable Size: {{ item.size | filesizeformat(true) }}"
           - "  System Disk: {{ item.system_disk | default('No') }}"
