@@ -6,7 +6,7 @@
     - name: Get disk information and convert size to GB
       win_command: |
         powershell Get-WmiObject -Class Win32_DiskDrive | 
-        Select-Object DeviceID, Model, @{Name="Size(GB)";Expression={[math]::round($_.Size / 1073741824, 2)}}, MediaType
+        Select-Object DeviceID, Model, @{Name="SizeGB";Expression={[math]::round($_.Size / 1073741824, 2)}}, MediaType
       register: disk_info
 
     - name: Display disk information
