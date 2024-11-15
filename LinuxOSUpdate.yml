@@ -2,6 +2,7 @@
 - name: Update system packages
   hosts: all
   become: true
+  become_user: airizarry
   tasks:
     - name: Update packages (RedHat based)
       yum:
