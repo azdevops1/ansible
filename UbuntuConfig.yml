@@ -1,0 +1,24 @@
+---
+- name: Essential Ubuntu Configuration
+  hosts: all  
+  become: yes  # This allows the playbook to run with sudo
+  tasks:
+    # Install some common packages
+    - name: Install essential packages
+      apt:
+        name: 
+          - unzip
+          - git
+          - vim
+          - python3-pip
+        state: present
+
+    # Create a new user with sudo privileges
+    - name: Add a new user with sudo privileges
+      user:
+        name: newuser
+        groups: sudo
+        append: yes
+        state: present
+        create_home: yes
+        shell: /bin/bash
