@@ -1,7 +1,6 @@
 ---
 - name: Essential Ubuntu Configuration
-  hosts: all  
-  become: yes  # This allows the playbook to run with sudo
+  hosts: all
   tasks:
     # Install some common packages
     - name: Install essential packages
@@ -16,7 +15,7 @@
     # Create a new user with sudo privileges
     - name: Add a new user with sudo privileges
       user:
-        name: newuser
+        name: morphdemo
         groups: sudo
         append: yes
         state: present
